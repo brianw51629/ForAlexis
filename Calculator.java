@@ -2,8 +2,7 @@
 public class Calculator {
 
     public static void main(String[] args) {
-        System.out.println(Calculator.add("00005.05", "10.050")); // should print 15.1
-        System.out.println(Calculator.multiply("1", 3)); // should print 3.0
+        
     }
 
     public Calculator() {
