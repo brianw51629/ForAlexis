@@ -1,6 +1,8 @@
 
 public class Calculator {
 
+    
+
     public Calculator() {
     }
 
@@ -67,8 +69,8 @@ public class Calculator {
     }
 
     public static char addDigits(char firstDigit, char secondDigit, boolean carryIn) {
-        int digit1 = Character.getNumericValue(firstDigit);
-        int digit2 = Character.getNumericValue(secondDigit);
+        int digit1 = firstDigit-'0';
+        int digit2 = secondDigit-'0';
 
         int sum = digit1 + digit2 + (carryIn ? 1 : 0);
 
@@ -76,8 +78,8 @@ public class Calculator {
     }
 
     public static boolean carryOut(char firstDigit, char secondDigit, boolean carryIn) {
-        int digit1 = Character.getNumericValue(firstDigit);
-        int digit2 = Character.getNumericValue(secondDigit);
+        int digit1 = firstDigit-'0';
+        int digit2 = secondDigit-'0';
 
         int sum = digit1 + digit2 + (carryIn ? 1 : 0);
 
@@ -144,4 +146,3 @@ public class Calculator {
     }
 
 }
-
