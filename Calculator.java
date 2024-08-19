@@ -80,10 +80,18 @@ public class Calculator {
         String whole2 = extractWholeNumber(secondNumber);
         String decimal1 = extractDecimal(firstNumber);
         String decimal2 = extractDecimal(secondNumber);
-    
-        
-        int maxWholeLength = Math.max(whole1.length(), whole2.length());
-        int maxDecimalLength = Math.max(decimal1.length(), decimal2.length());
+        int maxWholeLength;
+        int maxDecimalLength;
+        if(whole1.length()>whole2.length()){
+            maxWholeLength=whole1.length();
+        }else{
+            maxWholeLength=whole2.length();
+        }
+        if(decimal1.length()>decimal2.length()){
+            maxDecimalLength=decimal1.length();
+        }else{
+            maxDecimalLength=decimal2.length();
+        }
     
         whole1 = prependZeros(whole1, maxWholeLength - whole1.length());
         whole2 = prependZeros(whole2, maxWholeLength - whole2.length());
