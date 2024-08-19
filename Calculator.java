@@ -52,6 +52,9 @@ public class Calculator {
         if (number.startsWith(".")) {
             number = "0" + number; // Add leading zero before the decimal if needed
         }
+        if(number.endsWith(".")){
+            number = number + "0";
+        }
     }
     return number;
 }
