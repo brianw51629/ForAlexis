@@ -45,28 +45,16 @@ public class Calculator {
     }
 
     public static String formatResult(String number) {
-
-        String result = number.replaceFirst("^0+(?!$)", "");
-
-        if (!result.contains(".")) {
-            result += ".0";
+    if (number.contains(".")) {
+        number = number.replaceFirst("^0+(?!\\.)", ""); // Remove leading zeros before the decimal point
+        number = number.replaceAll("(?<=\\.[0-9]*)0+$", ""); // Remove trailing zeros after the decimal point
+        
+        if (number.startsWith(".")) {
+            number = "0" + number; // Add leading zero before the decimal if needed
         }
-
-        if (result.startsWith(".")) {
-            result = "0" + result;
-        }
-
-        int dotIndex = result.indexOf('.');
-        if (dotIndex != -1) {
-            result = result.replaceAll("(?<=\\.[0-9]*[^0])0+$", "");
-        }
-
-        if (result.endsWith(".")) {
-            result += "0";
-        }
-
-        return result;
     }
+    return number;
+}
 
     public static char addDigits(char firstDigit, char secondDigit, boolean carryIn) {
         int digit1 = firstDigit-'0';
@@ -92,56 +80,58 @@ public class Calculator {
         String whole2 = extractWholeNumber(secondNumber);
         String decimal1 = extractDecimal(firstNumber);
         String decimal2 = extractDecimal(secondNumber);
-        int maxWholeLength;
-        int maxDecimalLength;
-        if(whole1.length()>whole2.length()){
-            maxWholeLength=whole1.length();
-        }else{
-            maxWholeLength=whole2.length();
-        }
-        if(decimal1.length()>decimal2.length()){
-            maxDecimalLength=decimal1.length();
-        }else{
-            maxDecimalLength=decimal2.length();
-        }
+    
         
-        
-        //int maxWholeLength = Math.max(whole1.length(), whole2.length());
-        //int maxDecimalLength = Math.max(decimal1.length(), decimal2.length());
-
+        int maxWholeLength = Math.max(whole1.length(), whole2.length());
+        int maxDecimalLength = Math.max(decimal1.length(), decimal2.length());
+    
         whole1 = prependZeros(whole1, maxWholeLength - whole1.length());
         whole2 = prependZeros(whole2, maxWholeLength - whole2.length());
         decimal1 = appendZeros(decimal1, maxDecimalLength - decimal1.length());
         decimal2 = appendZeros(decimal2, maxDecimalLength - decimal2.length());
-
+    
         
-        String num1 = whole1 + decimal1;
-        String num2 = whole2 + decimal2;
-
         StringBuilder result = new StringBuilder();
         boolean carry = false;
-        for (int i = num1.length() - 1; i >= 0; i--) {
-            char digit = addDigits(num1.charAt(i), num2.charAt(i), carry);
-            carry = carryOut(num1.charAt(i), num2.charAt(i), carry);
+    
+        
+        for (int i = maxDecimalLength - 1; i >= 0; i--) {
+            char digit = addDigits(decimal1.charAt(i), decimal2.charAt(i), carry);
+            carry = carryOut(decimal1.charAt(i), decimal2.charAt(i), carry);
             result.insert(0, digit);
         }
+    
+        
+        result.insert(0, '.');
+    
+        
+        for (int i = maxWholeLength - 1; i >= 0; i--) {
+            char digit = addDigits(whole1.charAt(i), whole2.charAt(i), carry);
+            carry = carryOut(whole1.charAt(i), whole2.charAt(i), carry);
+            result.insert(0, digit);
+        }
+    
+        
         if (carry) {
             result.insert(0, '1');
         }
-
-        String finalResult = result.substring(0, maxWholeLength) + "." + result.substring(maxWholeLength);
-        return formatResult(finalResult);
+    
+        
+        return formatResult(result.toString());
     }
+    
+    
 
     public static String multiply(String number, int numTimes) {
-        if (numTimes <= 0){
+        if (numTimes <= 0) {
             return "0.0";
-        } 
-        
+        }
+    
         String result = "0.0";
         for (int i = 0; i < numTimes; i++) {
             result = add(result, number);
         }
+    
         return formatResult(result);
     }
 
