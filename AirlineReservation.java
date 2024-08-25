@@ -404,16 +404,19 @@ public class AirlineReservation {
     public static boolean upgrade(String passengerName, int upgradeClass) {
     if (passengerName == null) return false;
 
-    int currentClass = findClass(lookUp(passengerName));
-    if (currentClass == -1 || upgradeClass >= currentClass) return false;
+    int currentRow = lookUp(passengerName);
+    if (currentRow == -1) return false;
+
+    int currentClass = findClass(currentRow);
+    if (upgradeClass >= currentClass) return false;
 
     int start = findFirstRow(upgradeClass);
     int end = findLastRow(upgradeClass);
 
     for (int i = start; i <= end; i++) {
         if (passengers[i] == null) {
-            passengers[i] = passengerName;
-            passengers[lookUp(passengerName)] = null;
+            passengers[i] = passengerName;  // Assign to new seat
+            passengers[currentRow] = null;  // Free up old seat
             return true;
         }
     }
