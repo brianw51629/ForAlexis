@@ -54,20 +54,25 @@ public class Post {
         
     }
     public ArrayList<Post> getThread() {
-        ArrayList<Post> thread = new ArrayList<>();
-        Post current = this;
+    ArrayList<Post> thread = new ArrayList<>();
+    Post current = this;
 
-       
-        while (current != null) {
-            thread.add(current);
-            current = current.replyTo; 
-        }
-
-       
-        java.util.Collections.reverse(thread);
-
-        return thread;
+    while (current != null) {
+        thread.add(current);
+        current = current.replyTo; 
     }
+
+    
+    ArrayList<Post> reversedThread = new ArrayList<>();
+    
+    
+    for (int i = thread.size() - 1; i >= 0; i--) {
+        reversedThread.add(thread.get(i));
+    }
+
+    return reversedThread;
+}
+
     @Override
     public String toString() {
         String TO_STRING_POST_FORMAT = "[%d|%d]\t%s\n\t%s";
