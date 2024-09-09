@@ -1,8 +1,8 @@
 import java.awt.Color;
 
 public class Elephant extends Critter {
-    protected int goalX = 0;
-    protected int goalY = 0;
+    protected static int goalX = 0;
+    protected static int goalY = 0;
 
     public Elephant() {
         super("El");
