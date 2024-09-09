@@ -1,6 +1,6 @@
 import java.awt.Color;
 
-public class CustomCritter extends Feline {
+public class CustomCritter extends Critter {
     private int winCount = 0;
 
     public CustomCritter() {
